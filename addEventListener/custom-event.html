@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event World</title>
+    <style>
+        .buttons {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid black;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        .button {
+            margin: 8px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="buttons" align="center">
+        <h3 id="caption">Silahkan tekan salah satu tombol di bawah...</h3>
+        <button class="button" id="tombol">Tombol Custom Event</button>
+    </div>
+
+    <script>
+        // membuat custom event di javascript dengan nama 'changeCaption'
+        const changeCaption = new Event('changeCaption');
+
+        // memasang event listener
+        window.addEventListener('load', function(){
+            // mengambil id tombol untuk diubah 
+            const tombol = document.getElementById('tombol');
+            // kalo tombol mendapatkan event 'changeCaption' maka akan dijalankan fungsi customEventHandler
+            tombol.addEventListener('changeCaption', customEventHandler);
+            // saat tombol diklik, belum ada aksi (kosong)
+            tombol.addEventListener('click', function(){
+                tombol.dispatchEvent(changeCaption);
+            });
+        });
+
+        function customEventHandler(ev){
+            console.log('Event ' + ev.type + ' telah dijalankan');
+            const caption = document.getElementById('caption');
+            caption.innerText = 'Anda telah membangkitkan custom event';
+        }
+    </script>
+</body>
+</html>
